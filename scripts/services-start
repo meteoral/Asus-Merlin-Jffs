@@ -1,0 +1,21 @@
+#!/bin/sh
+
+RC='/opt/etc/init.d/rc.unslung'
+
+i=30
+until [ -x "$RC" ] ; do
+  i=$(($i-1))
+  if [ "$i" -lt 1 ] ; then
+    logger "Could not start Entware"
+    exit
+  fi
+  sleep 1
+done
+$RC start
+
+ulimit -n 8192
+
+/jffs/bin/ss-local -b 0.0.0.0 -l 23456 -c /jffs/bin/ss.json -u -f /var/run/sslocal.pid
+/jffs/bin/dns2socks 127.0.0.1:23456 8.8.8.8:53 127.0.0.1:5454 > /dev/null 2>&1 &
+/jffs/bin/ss-redir -b 0.0.0.0 -c /jffs/bin/ss.json -f /var/run/ssredir.pid
+/jffs/bin/vlmcsd

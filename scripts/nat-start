@@ -1,0 +1,30 @@
+#!/bin/sh
+lan_ipaddr=$(nvram get lan_ipaddr)
+ISP_DNS=$(nvram get wan0_dns|sed 's/ /\n/g'|grep -v 0.0.0.0|grep -v 127.0.0.1|sed -n 1p)
+ip1=$(nvram get wan0_ipaddr | cut -d"." -f1)
+ip2=$(nvram get wan0_ipaddr | cut -d"." -f2)
+ss_basic_server=0.0.0.0
+
+# Create new set
+ipset -N gfwlist iphash
+
+# Create new chain
+iptables -t nat -N SHADOWSOCKS
+
+# Ignore LANs and any other addresses you'd like to bypass the proxy
+iptables -t nat -A SHADOWSOCKS -d $ss_basic_server -j RETURN
+iptables -t nat -A SHADOWSOCKS -d 0.0.0.0/8 -j RETURN
+iptables -t nat -A SHADOWSOCKS -d 10.0.0.0/8 -j RETURN
+iptables -t nat -A SHADOWSOCKS -d 127.0.0.0/8 -j RETURN
+iptables -t nat -A SHADOWSOCKS -d 169.254.0.0/16 -j RETURN
+iptables -t nat -A SHADOWSOCKS -d 172.16.0.0/12 -j RETURN
+iptables -t nat -A SHADOWSOCKS -d 192.168.0.0/16 -j RETURN
+iptables -t nat -A SHADOWSOCKS -d 224.0.0.0/4 -j RETURN
+iptables -t nat -A SHADOWSOCKS -d 240.0.0.0/4 -j RETURN
+iptables -t nat -A SHADOWSOCKS -d $ip1.$ip2.0.0/16 -j RETURN
+
+iptables -t nat -A PREROUTING -p tcp -m set --match-set gfwlist dst -j REDIRECT --to-port 3333
+iptables -t nat -A OUTPUT -p tcp -m set --match-set gfwlist dst -j REDIRECT --to-port 3333
+# iptables -t nat -A PREROUTING -p tcp -j SHADOWSOCKS
+sed -i "2c server=$ISP_DNS" /jffs/configs/dnsmasq.conf.add
+/sbin/service restart_dnsmasq >/dev/null 2>&1

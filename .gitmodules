@@ -1,0 +1,6 @@
+[submodule "source/shadowsocks-libev"]
+	path = source/shadowsocks-libev
+	url = https://github.com/shadowsocks/shadowsocks-libev.git
+[submodule "source/dns2socks"]
+	path = source/dns2socks
+	url = https://github.com/qiuzi/dns2socks.git

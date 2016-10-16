@@ -1,0 +1,12 @@
+{
+    "localaddr": ":xxxx",
+    "remoteaddr": ":23333",
+    "key": "xxxx",
+    "crypt" : "salsa20",
+    "mode": "fast2",
+    "mtu": 1400,
+    "sndwnd": 256,
+    "rcvwnd": 2048,
+    "dscp": 46,
+    "nocomp": false
+}

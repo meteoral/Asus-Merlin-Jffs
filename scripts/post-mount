@@ -1,5 +1,0 @@
-#!/bin/sh
-
-if [ "$1" = "/tmp/mnt/HomeU" ] ; then
-  ln -nsf $1/entware /tmp/opt
-fi

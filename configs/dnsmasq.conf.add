@@ -1,4 +1,4 @@
 no-resolv
-server=202.96.128.166
+server=202.96.134.33
 conf-file=/jffs/bin/gfwlist.conf
 conf-file=/jffs/bin/adblist.conf

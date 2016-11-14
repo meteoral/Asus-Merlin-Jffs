@@ -1,12 +1,12 @@
 {
-    "localaddr": ":xxxx",
-    "remoteaddr": ":23333",
-    "key": "xxxx",
+    "localaddr": ":43211",
+    "remoteaddr": "106.186.116.235:23333",
+    "key": "lqw@@xjy",
     "crypt" : "salsa20",
-    "mode": "fast2",
+    "mode": "fast",
     "mtu": 1400,
     "sndwnd": 256,
     "rcvwnd": 2048,
     "dscp": 46,
-    "nocomp": false
+    "nocomp": true
 }

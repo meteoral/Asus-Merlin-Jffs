@@ -5,8 +5,8 @@ ulimit -n 8192
 /jffs/bin/ss-redir -b 0.0.0.0 -c /jffs/bin/ss.json -f /var/run/ssredir.pid
 /jffs/bin/vlmcsd
 # make the LED off at 00:00 and on at 07:00
-cru a lightsoff "0 0 * * * /jffs/scripts/ledoff"
-cru a lightson "0 7 * * * /jffs/scripts/ledson"
+#cru a lightsoff "0 0 * * * /jffs/scripts/ledoff"
+#cru a lightson "0 7 * * * /jffs/scripts/ledson"
 
 nvram set 0:maxp2ga0=120
 nvram set 0:maxp2ga1=120
@@ -15,4 +15,4 @@ nvram set 1:maxp5ga0=120,120,120,120
 nvram set 1:maxp5ga1=120,120,120,120
 nvram set 1:maxp5ga2=120,120,120,120
 nvram commit
-/jffs/bin/daemon -m -p /var/run/kcp_client.pid -S -x /jffs/bin/kcptun_client -b -- -c /jffs/bin/kcptun.json
+# /jffs/bin/daemon -m -p /var/run/kcp_client.pid -S -x /jffs/bin/kcptun_client -b -- -c /jffs/bin/kcptun.json
